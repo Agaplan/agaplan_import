@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record id="type_search_view" model="ir.ui.view">
+        <field name="name">import.type.search</field>
+        <field name="model">import.type</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Import Types">
+                <field name="name"/>
+                <field name="parser_id"/>
+                <field name="multi_record"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="type_form_view" model="ir.ui.view">
+        <field name="name">import.type.form</field>
+        <field name="model">import.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Import Type">
+                <group colspan="4" col="6">
+                    <field name="name"/>
+                    <field name="parser_id"/>
+                    <field name="multi_record"/>
+                </group>
+                <notebook colspan="4">
+                    <page string="Arguments">
+                        <field name="arguments" colspan="4" nolabel="1">
+                            <tree string="Arguments">
+                                <field name="argument_id"/>
+                                <field name="value"/>
+                            </tree>
+                            <form string="Arguments">
+                                <field name="argument_id"/>
+                                <field name="value"/>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Header/Footer">
+                        <field name="file_header" colspan="4"/>
+                        <field name="file_footer" colspan="4"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+     <record id="action_type" model="ir.actions.act_window">
+        <field name="name">Import Types</field>
+        <field name="res_model">import.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_type"
+        action="action_type"
+        parent="import_menu" />
+
+</data>
+</openerp>

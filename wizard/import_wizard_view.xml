@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record id="import_wizard_form_view_start" model="ir.ui.view">
+        <field name="name">import.wizard.form.start</field>
+        <field name="model">import.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Import Wizard">
+                <field name="profile_id" colspan="4" required="1"/>
+                <field name="filedata" colspan="4" filename="filename" required="1"/>
+                <field name="filename" invisible="1"/>
+                <separator colspan="4"/>
+                <group colspan="2"></group>
+                <group colspan="2" col="10">
+                    <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                    <button icon="gtk-go-forward" type="object" name="action_process" string="Process" default_focus="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_wizard_form_view_check" model="ir.ui.view">
+        <field name="name">import.wizard.form.check</field>
+        <field name="model">import.wizard</field>
+        <field name="type">form</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <form string="Import Wizard">
+                <field name="filename" readonly="1" colspan="4"/>
+                <notebook colspan="4">
+                    <page string="Records">
+                        <field name="record_ids" colspan="4" nolabel="1" width="400" height="300">
+                            <tree string="Found Records" colors="red:done==False;blue:done==True">
+                                <field name="rec_model"/>
+                                <field name="rec_id"/>
+                                <field name="xml_id"/>
+                                <field name="line_id" groups="base.group_no_one"/>
+                                <field name="done" invisible="1"/>
+                            </tree>
+                            <form string="Found Records">
+                                <field name="xml_id"/>
+                                <field name="line_id" groups="base.group_no_one"/>
+                                <field name="rec_model"/>
+                                <field name="rec_id"/>
+                                <field name="field_ids" colspan="4">
+                                    <tree string="Field values" colors="red:done==False;blue:done==True">
+                                        <field name="line_id"  groups="base.group_no_one"/>
+                                        <field name="field_id"/>
+                                        <field name="value"/>
+                                        <field name="done" invisible="1"/>
+                                    </tree>
+                                    <form string="Field values">
+                                        <field name="line_id" colspan="4" groups="base.group_no_one"/>
+                                        <field name="field_id"/>
+                                        <field name="value"/>
+                                        <field name="done"/>
+                                    </form>
+                                </field>
+                                <field name="notes" colspan="4"/>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Notes">
+                        <field name="notes" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+                <separator colspan="4"/>
+                <group colspan="2"/>
+                <group colspan="2" col="2">
+                    <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                    <button icon="gtk-go-forward" type="object" name="action_import" string="Import" default_focus="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_wizard_form_view_notes" model="ir.ui.view">
+        <field name="name">import.wizard.form.notes</field>
+        <field name="model">import.wizard</field>
+        <field name="type">form</field>
+        <field name="priority">30</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="notes" colspan="4" width="400" height="400" nolabel="1"/>
+                <group colspan="2"/>
+                <group colspan="2" col="2">
+                    <button icon="gtk-cancel" special="cancel" string="Done" default_focus="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_wizard_action" model="ir.actions.act_window">
+        <field name="name">Import Wizard</field>
+        <field name="res_model">import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_type">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <act_window id="import_wizard_from_profile_action"
+        name="Import Wizard"
+        res_model="import.wizard"
+        src_model="import.profile"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+        />
+
+    <menuitem id="import_wizard_menu"
+        parent="import_menu"
+        action="import_wizard_action" />
+
+</data>
+</openerp>

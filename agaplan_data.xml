@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <menuitem id="import_menu"
+        parent="base.menu_config"
+        name="Agaplan Import Configuration"
+        sequence="100" />
+
+</data>
+</openerp>

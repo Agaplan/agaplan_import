@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record id="profile_search_view" model="ir.ui.view">
+        <field name="name">import.profile.search</field>
+        <field name="model">import.profile</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Import Profiles">
+                <field name="name"/>
+                <field name="type_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="profile_tree_view" model="ir.ui.view">
+        <field name="name">import.profile.tree</field>
+        <field name="model">import.profile</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Import Profiles">
+                <field name="name"/>
+                <field name="type_id"/>
+                <button name="%(import_wizard_action)d" type="action" string="Execute" icon="gtk-execute"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="profile_form_view" model="ir.ui.view">
+        <field name="name">import.profile.form</field>
+        <field name="model">import.profile</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Import Profile">
+                <field name="name"/>
+                <field name="type_id"/>
+                <field name="line_ids" colspan="4" nolabel="1" domain="[('parent_id','=',False),('profile_id','=',active_id)]" context="{'default_profile_id': active_id}">
+                    <tree string="Profile Lines">
+                        <field name="parent_id"/>
+                        <field name="sequence"/>
+                        <field name="name"/>
+                        <field name="action"/>
+                        <field name="sub_action"/>
+                        <field name="model_id"/>
+                        <field name="field_id"/>
+                    </tree>
+                </field>
+                <button name="%(import_wizard_action)d" type="action" string="Execute" icon="gtk-execute" colspan="4"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="profile_lines_tree_view" model="ir.ui.view">
+        <field name="name">import.profile.line.tree</field>
+        <field name="model">import.profile.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Profile Lines">
+                <field name="profile_id"/>
+                <field name="parent_id"/>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="action"/>
+                <field name="sub_action"/>
+                <field name="model_id"/>
+                <field name="field_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="profile_lines_form_view" model="ir.ui.view">
+        <field name="name">import.profile.line.form</field>
+        <field name="model">import.profile.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Profile Lines">
+                <field name="name"/>
+                <field name="parent_id" domain="[('profile_id','=',profile_id)]"/>
+                <field name="profile_id"/>
+                <field name="sequence"/>
+                <newline/>
+                <field name="action"/>
+                <group colspan="2" col="4">
+                    <field name="model_id" attrs="{'invisible': [('action','not in',['match','record'])], 'required': [('action','=','record')]}"/>
+                    <field name="field_id" context="{'search_default_model_id': context.get('limit_model_id')}"
+                        attrs="{'invisible': [('action','not in',['match','field'])], 'required': [('action','=','field')]}"/>
+                </group>
+                <field name="sub_action" colspan="4"/>
+                <notebook colspan="4">
+                    <page string="Child fields">
+                        <field name="child_ids" colspan="4" nolabel="1"
+                            attrs="{'readonly': [('sub_action','not in',['find','create'])]}"
+                            context="{'default_parent_id': active_id, 'default_profile_id': profile_id, 'limit_model_id': model_id}"/>
+                    </page>
+                    <page string="Functions">
+                        <field name="include_func" colspan="4"/>
+                        <field name="value_func" colspan="4"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_profile" model="ir.actions.act_window">
+        <field name="name">Import Profiles</field>
+        <field name="res_model">import.profile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_profile"
+        action="action_profile"
+        parent="import_menu" />
+
+</data>
+</openerp>

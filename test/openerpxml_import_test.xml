@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<record id="test" model="sale.order">
+    <field name="name">test</field>
+    <field name="partner_id">De vlieger</field>
+</record>

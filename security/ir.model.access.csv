@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_import_parser_admin","import.parser admin","model_import_parser","base.group_system",1,1,1,1
+"access_import_parser_argument_admin","import.parser.argument admin","model_import_parser_argument","base.group_system",1,1,1,1
+"access_import_type_admin","import.type admin","model_import_type","base.group_system",1,1,1,1
+"access_import_type_argument_admin","import.type.argument admin","model_import_type_argument","base.group_system",1,1,1,1
+"access_import_profile_admin","import.profile admin","model_import_profile","base.group_system",1,1,1,1
+"access_import_profile_line_admin","import.profile.line admin","model_import_profile_line","base.group_system",1,1,1,1

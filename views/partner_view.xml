@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!--
+        This is a simple hook view for any inheriting modules import_stock/sale/invoice.
+        We provide a single notebook page which can be filled with the different profiles
+    -->
+    <record id="import_partner_form" model="ir.ui.view">
+        <field name="name">import.res.partner.form</field>
+        <field name="type">form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook">
+                <page string="Import profiles">
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</data>
+</openerp>

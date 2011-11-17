@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record id="parser_search_view" model="ir.ui.view">
+        <field name="name">import.parser.search</field>
+        <field name="model">import.parser</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Import Parsers">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="parser_form_view" model="ir.ui.view">
+        <field name="name">import.parser.form</field>
+        <field name="model">import.parser</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Import Parser">
+                <field name="name"/>
+                <separator string="Arguments" colspan="4"/>
+                <field name="arguments" colspan="4" nolabel="1">
+                    <tree string="Arguments">
+                        <field name="name"/>
+                        <field name="default_value"/>
+                    </tree>
+                    <form string="Arguments">
+                        <field name="name"/>
+                        <field name="default_value"/>
+                        <field name="validation_func" colspan="4"/>
+                    </form>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_parser" model="ir.actions.act_window">
+        <field name="name">Import Parsers</field>
+        <field name="res_model">import.parser</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_parser"
+        action="action_parser"
+        parent="import_menu" />
+
+</data>
+</openerp>
