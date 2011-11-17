@@ -88,10 +88,15 @@ class import_wizard(osv.osv_memory):
             if record.rec_id:
                 # Update this record
                 for field in record.field_ids:
-                    if field.field_id.ttype == 'one2many' or field.field_id.ttype == 'many2many':
+                    if field.field_id.ttype == 'one2many':
                         log.warn("Not yet implemented: updating '%s' fields", field.field_id.ttype)
                         remarks.append( _("Not yet implemented: updating '%s' fields") % (field.field_id.ttype) )
                         continue
+                    if field.field_id.ttype == 'many2many':
+                        rec_model.write(cursor, uid, record.rec_id, {
+                            field.field_id.name: [(4, int(field.value))],
+                        })
+                        field.write({'done':True})
                     if field.field_id.ttype == 'many2one':
                         try:
                             rec_model.write(cursor, uid, record.rec_id, {
