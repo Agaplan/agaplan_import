@@ -121,7 +121,7 @@ class import_wizard(osv.osv_memory):
                 for field in record.field_ids:
                     log.info("Adding '%s' : '%s' to values", field.field_id.name, field.value)
                     if field.field_id.ttype == 'many2one':
-                        if field.value in xml_map
+                        if field.value in xml_map:
                             val = xml_map[field.value]
                         else:
                             try:
@@ -132,7 +132,12 @@ class import_wizard(osv.osv_memory):
                                 all_ok = False
                     elif field.field_id.ttype == 'many2many':
                         # TODO Add all field lines together before writing it
-                        val = [(6,0,[field.value])]
+                        if field.field_id.name in vals:
+                            # Add our current value to the already existing list in (6,0,[...])
+                            vals[field.field_id.name][0][2] += [field.value]
+                        else:
+                            # Create a many2many link field with (for now) just one value
+                            val = [(6,0,[field.value])]
                     else:
                         val = field.value
                     vals.update({
