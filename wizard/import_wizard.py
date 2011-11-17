@@ -120,15 +120,16 @@ class import_wizard(osv.osv_memory):
                 vals = {}
                 for field in record.field_ids:
                     log.info("Adding '%s' : '%s' to values", field.field_id.name, field.value)
-                    val = None
                     if field.field_id.ttype == 'many2one':
-                        try:
-                            val = xml_map.get(field.value,None) or int(field.value)
-                        except ValueError:
-                            # Conversion to int failed (means there is an xml id in field.value but it was not found in xml_map)
-                            log.error("Could not find '%s' xmlid in the xml_map: %s", field.value, xml_map)
-                            remarks.append( _("Could not find '%s' xmlid") % (field.value) )
-                            all_ok = False
+                        if field.value in xml_map
+                            val = xml_map[field.value]
+                        else:
+                            try:
+                                log.warn("Could not find '%s' in xml_map, attempting to use as integer id", field.value)
+                                val = int(field.value)
+                            except ValueError:
+                                remarks.append( _("Could not find '%s' xmlid or convert it to integer") % (field.value) )
+                                all_ok = False
                     elif field.field_id.ttype == 'many2many':
                         # TODO Add all field lines together before writing it
                         val = [(6,0,[field.value])]
