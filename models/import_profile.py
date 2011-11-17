@@ -38,7 +38,7 @@ import_profile()
 class import_profile_line(osv.osv):
     _name = 'import.profile.line'
 
-    _order = 'sequence, name'
+    _order = 'sequence, id'
 
     def _get_actions(self, cursor, uid, context=None):
         res = (
