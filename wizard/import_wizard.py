@@ -98,17 +98,22 @@ class import_wizard(osv.osv_memory):
                         })
                         field.write({'done':True})
                     elif field.field_id.ttype == 'many2one':
-                        try:
+                        if field.value in xml_map:
                             rec_model.write(cursor, uid, record.rec_id, {
                                 field.field_id.name: xml_map[field.value],
                             })
                             field.write({'done':True})
-                        except KeyError, k:
-                            log.error("Unable to update field '%s' on model '%s' to '%s' because it was not found in the xml map",
-                                field.field_id.name, record.rec_model.model, field.value)
-                            remarks.append( _("Unable to update field '%s' on model '%s' with value '%s' because it was not found in the xml map")
-                                % ( field.field_id.name, record.rec_model.model, field.value) )
-                            all_ok = False
+                        else:
+                            try:
+                                log.warn("Could not find '%s' in xml_map, attempting to use as integer id", field.value)
+                                rec_model.write(cursor, uid, record.rec_id, {
+                                    field.field_id.name: int(field.value),
+                                })
+                                field.write({'done':True})
+                            except KeyError, k:
+                                remarks.append( _("Unable to update field '%s' on model '%s' with value '%s' because it was not found in the xml map and could not be used as integer.")
+                                    % ( field.field_id.name, record.rec_model.model, field.value) )
+                                all_ok = False
                     else:
                         try:
                             rec_model.write(cursor, uid, record.rec_id, {
