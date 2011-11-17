@@ -139,12 +139,13 @@ class import_wizard(osv.osv_memory):
                         # TODO Add all field lines together before writing it
                         if field.field_id.name in vals:
                             # Add our current value to the already existing list in (6,0,[...])
-                            vals[field.field_id.name][0][2] += [field.value]
+                            val = [(6,0, vals[field.field_id.name][0][2] + [field.value])]
                         else:
                             # Create a many2many link field with (for now) just one value
                             val = [(6,0,[field.value])]
                     else:
                         val = field.value
+
                     vals.update({
                         field.field_id.name: val
                     })
