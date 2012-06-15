@@ -86,7 +86,8 @@
                     <field name="field_id" context="{'search_default_model_id': context.get('limit_model_id')}"
                         attrs="{'invisible': [('action','not in',['match','field'])], 'required': [('action','=','field')]}"/>
                 </group>
-                <field name="sub_action" colspan="4"/>
+                <field name="sub_action"/>
+                <field name="repeat"/>
                 <notebook colspan="4">
                     <page string="Child fields">
                         <field name="child_ids" colspan="4" nolabel="1"

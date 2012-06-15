@@ -91,5 +91,6 @@ class import_profile_line(osv.osv):
         'field_id': fields.many2one('ir.model.fields', 'Field'),
         'include_func': fields.text('Include Function'),
         'value_func': fields.text('Value Function'),
+        'repeat': fields.boolean('Repeat in file'),
     }
 import_profile_line()
